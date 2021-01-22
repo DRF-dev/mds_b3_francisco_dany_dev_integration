@@ -48,3 +48,19 @@ it("should return Bad Request", done => {
       done()
     })
 })
+
+it("should add new color", done => {
+  chai.request(app)
+    .post('/colors')
+    .set('content-type', 'application/json')
+    .send({ color: "plop" })
+    .end((err, res) => {
+      if (err) done(err)
+      expect(res).to.have.status(201)
+      expect(res).to.be.json
+      expect(res.body).to.be.an('object')
+      expect(res.body.results).to.be.an('array')
+      expect(res.body.results).include("PLOP")
+      done()
+    })
+})
